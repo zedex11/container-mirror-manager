@@ -20,7 +20,7 @@ jobs:
       uses: google-github-actions/setup-gcloud@v0
 
     - name: Login to Gcloud Registry
-      id: login-ar
+      id: login-to-ar
       run: |
         gcloud auth configure-docker europe-central2-docker.pkg.dev,europe-west3-docker.pkg.dev --quiet
 

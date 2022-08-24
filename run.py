@@ -1,5 +1,4 @@
 import yaml
-import json
 from yaml.loader import SafeLoader
 import docker
 
@@ -20,7 +19,7 @@ with open('images.yaml') as f:
             print("------------------------------------\n\n")
 
             for line in clientAPI.pull(str(docker_image), stream=True, decode=True):
-                print(json.dumps(line, indent=4))
+                print(line)
 
             short_image_name = image_name.split("/")[-1]
 
@@ -33,4 +32,3 @@ with open('images.yaml') as f:
                 print("------------------------------------\n\n")
                 for line in clientAPI.push(str(new_docker_image), stream=True, decode=True):
                     print(line)
-
