@@ -28,5 +28,5 @@ jobs:
 
     - name: Run script
       run: |
-        pip install -r requirements.txt
-        python3 run.py
+        pip install -r .github/requirements.txt
+        python3 .github/run.py
