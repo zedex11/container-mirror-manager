@@ -1,5 +1,4 @@
 images:
-  docker.elastic.co/elasticsearch/elasticsearch:
-    - 6.4.2
-  docker.elastic.co/eck/eck-operator:
-    - 1.1.1
+  dockerhub.es.ecg.tools/victoriametrics/vmselect:
+    - v1.63.0-cluster
+    - latest
