@@ -3,7 +3,8 @@ from yaml.loader import SafeLoader
 import docker
 import os
 
-gcp_registry = os.getenv('REGISTRY')
+gcp_registry = (os.getenv('REGISTRY').replace(" ", "")).split(",")
+print(gcp_registry)
 clientAPI = docker.APIClient(base_url='unix://var/run/docker.sock')
 # gcp_registry = ["europe-west3-docker.pkg.dev/crucial-matter-351210/docker/", "europe-central2-docker.pkg.dev/round-axiom-360411/test/"]
 
