@@ -7,7 +7,7 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     env:
-      REGISTRY: "europe-west3-docker.pkg.dev/crucial-matter-351210/docker/, europe-central2-docker.pkg.dev/round-axiom-360411/test/"
+      REGISTRY: "europe-west3-docker.pkg.dev/crucial-matter-351210/docker, europe-central2-docker.pkg.dev/round-axiom-360411/test"
 
     steps:
     - name: Checkout
@@ -25,8 +25,18 @@ jobs:
       id: login-to-ar
       run: |
         gcloud auth configure-docker europe-central2-docker.pkg.dev,europe-west3-docker.pkg.dev --quiet
+    
+    - name: Get list of existing images
+      run: |
+        a=($(echo "$REGISTRY" | tr ',' '\n'))
+        for element in "${a[@]}"
+        do
+            file_name="$(cut -d'/' -f2 <<<"$element")"
+            echo "${file_name}.json"
+            gcloud artifacts docker images list $element --format=json --include-tags > "${file_name}.json"
+        done
 
     - name: Run script
       run: |
         pip install -r requirements.txt
-        python3 .github/run.py
+        python3 .github/check.py
