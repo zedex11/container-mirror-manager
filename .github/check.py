@@ -87,4 +87,4 @@ else:
     print("The following images received an error during replication! Please check the name of the images from the list below in the 'images.yaml' file")
     print(set(err))
     print("\n")
-    sys.exit()
+    sys.exit("Please check the name of the images from the list below in the 'images.yaml' file")
