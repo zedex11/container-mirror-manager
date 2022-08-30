@@ -84,7 +84,7 @@ if not err:
     print("------------------------------------\n\n")
 else:
     print("\n\n------------------------------------")
-    print("The following images received an error during replication: ")
+    print("The following images received an error during replication! Please check the name of the images from the list below in the 'images.yaml' file")
     print(set(err))
     print("\n")
-    # sys.exit('Due to this job is failed! Please check the name of the images from the list above in the "images.yaml" file')
+    sys.exit()
