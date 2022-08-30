@@ -58,14 +58,14 @@ for image in data['images']:
                 except:
                     err.append(docker_image)
                     pass
-                try:
-                    clientAPI.remove_image(str(new_docker_image), force=True)
-                except:
-                    pass
-        try:    
-            clientAPI.remove_image(str(docker_image), force=True)
-        except:
-            pass
+        #         try:
+        #             clientAPI.remove_image(str(new_docker_image), force=True)
+        #         except:
+        #             pass
+        # try:    
+        #     clientAPI.remove_image(str(docker_image), force=True)
+        # except:
+        #     pass
 if not err:
     print("------------------------------------\n\n")
     print("All images have been successfully replicated")
