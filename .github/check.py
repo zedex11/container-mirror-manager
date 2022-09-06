@@ -8,6 +8,7 @@ import sys
 
 
 gcp_registry = (os.getenv("REGISTRY").replace(" ", "")).split(",")
+event = os.getenv("GITHUB_EVENT_NAME")
 clientAPI = docker.APIClient(base_url="unix://var/run/docker.sock")
 err = []
 
@@ -45,6 +46,26 @@ for image in data["images"]:
                     + new_docker_image
                     + " already exist in the gsp registry and will be skipped"
                 )
+            elif event == "pull_request":
+                print("\n\n------------------------------------")
+                print("Starting validate %s image:" % docker_image)
+                print("------------------------------------\n\n")
+                try:
+                    for line in clientAPI.pull(
+                        str(docker_image), stream=True, decode=True
+                    ):
+                        print(line)
+
+                except Exception as e:
+                    print(e)
+                    print("\n\n")
+                    err.append(docker_image)
+                    pass
+                try:
+                    clientAPI.remove_image(str(new_docker_image), force=True)
+                except:
+                    pass
+
             else:
                 print("\n\n------------------------------------")
                 print("Starting pulling %s image:" % docker_image)
@@ -78,7 +99,17 @@ for image in data["images"]:
             clientAPI.remove_image(str(docker_image), force=True)
         except:
             pass
-if not err:
+if not err and event == "pull_request":
+    print("\n\n------------------------------------")
+    print("All images have been successfully validated. PR can merged to the master")
+    print("------------------------------------\n\n")
+elif err and event == "pull_request":
+    print("\n\n------------------------------------")
+    print("The following images received an error during validation: ")
+    print(set(err))
+    print("\nPlease check the name of the images from the list above in the 'images.yaml' file before merging PR to the master\n")
+    sys.exit("error")
+elif not err:
     print("\n\n------------------------------------")
     print("All images have been successfully replicated")
     print("------------------------------------\n\n")
