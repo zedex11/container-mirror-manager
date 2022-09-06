@@ -1,6 +1,13 @@
-on: [workflow_dispatch]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
-name: Pull and Push
+
+name: TEST
 
 jobs:
   pull_and_push_images_to_gcp_registry:
@@ -25,6 +32,7 @@ jobs:
       id: login-to-ar
       run: |
         gcloud auth configure-docker europe-central2-docker.pkg.dev,europe-west3-docker.pkg.dev --quiet
+        echo $GITHUB_EVENT_NAME
     
     - name: Get list of existing images
       run: |
