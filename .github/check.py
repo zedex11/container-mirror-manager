@@ -101,7 +101,7 @@ for image in data["images"]:
             pass
 if not err and event == "pull_request":
     print("\n\n------------------------------------")
-    print("All images have been successfully validated. PR can merged to the master")
+    print("All images have been successfully validated. PR can be merged to the master")
     print("------------------------------------\n\n")
 elif err and event == "pull_request":
     print("\n\n------------------------------------")
